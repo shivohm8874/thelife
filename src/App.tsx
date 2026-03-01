@@ -120,6 +120,12 @@ const philosophyPoints = [
   },
 ]
 
+const joinStats = [
+  { value: '50+', label: 'ROBOT MODELS' },
+  { value: '100K+', label: 'UNITS DEPLOYED' },
+  { value: '24/7', label: 'GLOBAL OPERATIONS' },
+]
+
 function App() {
   const heroRef = useRef<HTMLDivElement>(null)
 
@@ -132,8 +138,10 @@ function App() {
       const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
       timeline
-        .from('.hero-nav', { y: -24, opacity: 0, duration: 0.7 })
+        .from('.hero-nav .logo', { y: -16, opacity: 0, duration: 0.6 })
+        .from('.hero-nav .menu > a', { y: -10, opacity: 0, duration: 0.45, stagger: 0.06 }, '-=0.3')
         .from('.hero-title', { y: 60, opacity: 0, duration: 0.9 }, '-=0.25')
+        .from('.hero-badge', { scale: 0.92, opacity: 0, duration: 0.7 }, '-=0.55')
         .from('.hero-headline', { y: 30, opacity: 0, duration: 0.7 }, '-=0.35')
         .from('.hero-subtitle', { y: 24, opacity: 0, duration: 0.7 }, '-=0.45')
         .from('.hero-actions .btn', { y: 20, opacity: 0, duration: 0.55, stagger: 0.08 }, '-=0.35')
@@ -171,6 +179,17 @@ function App() {
         },
       })
 
+      gsap.to('.mission-watermark', {
+        yPercent: -12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.mission',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      })
+
       gsap.from('.opportunity-head > *', {
         y: 30,
         opacity: 0,
@@ -180,6 +199,18 @@ function App() {
         scrollTrigger: {
           trigger: '.opportunity-head',
           start: 'top 78%',
+        },
+      })
+
+      gsap.from('.system-row img', {
+        scale: 1.08,
+        opacity: 0.75,
+        duration: 1,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.systems-grid',
+          start: 'top 82%',
         },
       })
 
@@ -277,6 +308,43 @@ function App() {
           start: 'top 82%',
         },
       })
+
+      gsap.from('.join-inner > *', {
+        y: 28,
+        opacity: 0,
+        duration: 0.78,
+        stagger: 0.08,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.join-inner',
+          start: 'top 82%',
+        },
+      })
+
+      gsap.from('.join-stats article', {
+        y: 12,
+        opacity: 0,
+        duration: 0.55,
+        stagger: 0.09,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.join-stats',
+          start: 'top 88%',
+        },
+      })
+
+      gsap.from('.site-footer .reveal-up', {
+        y: 18,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.06,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.site-footer',
+          start: 'top 88%',
+        },
+      })
+
     }, heroRef)
 
     return () => context.revert()
@@ -287,15 +355,17 @@ function App() {
       <section className="hero" ref={heroRef}>
         <div className="hero-nav-wrap">
           <div className="hero-nav">
-            <div className="logo">THE LIFE</div>
+            <a className="logo" href="/">
+              THE LIFE
+            </a>
             <nav className="menu" aria-label="Primary">
-              <a href="#technology">TECHNOLOGY</a>
-              <a href="#robots">ROBOTS</a>
-              <a href="#philosophy">PHILOSOPHY</a>
-              <a href="#research">RESEARCH</a>
-              <button className="menu-contact" type="button">
+              <a href="/#technology">TECHNOLOGY</a>
+              <a href="/robots.html">ROBOTS</a>
+              <a href="/philosophy.html">PHILOSOPHY</a>
+              <a href="/#research">RESEARCH</a>
+              <a className="menu-contact" href="/#contact">
                 CONTACT
-              </button>
+              </a>
             </nav>
           </div>
         </div>
@@ -381,7 +451,7 @@ function App() {
                     <p>{item.domain}</p>
                     <span>{item.scale}</span>
                   </div>
-                  <span className="portfolio-arrow">→</span>
+                  <span className="portfolio-arrow">-&gt;</span>
                 </article>
               ))}
             </div>
@@ -483,8 +553,97 @@ function App() {
           </div>
         </div>
       </section>
+
+      <section className="join" id="contact">
+        <div className="join-inner">
+          <span className="join-tag">JOIN US</span>
+          <h2>
+            <span>Build The Future</span>
+            <span>With Us</span>
+          </h2>
+          <p>
+            We&apos;re assembling the world&apos;s most talented engineers, scientists, and visionaries to create the
+            post-human age
+          </p>
+
+          <div className="join-actions">
+            <button className="join-btn join-btn-light" type="button">
+              REQUEST DEMO
+              <span>-&gt;</span>
+            </button>
+            <button className="join-btn join-btn-outline" type="button">
+              CAREERS
+            </button>
+          </div>
+
+          <div className="join-stats">
+            {joinStats.map((stat) => (
+              <article key={stat.label}>
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <footer className="site-footer">
+        <div className="footer-inner">
+          <div className="footer-main reveal-up">
+            <div className="footer-brand">
+              <h3>THE LIFE</h3>
+              <p>
+                Pioneering the industrialization of intelligence through advanced humanoid robotics and artificial
+                intelligence systems.
+              </p>
+              <div className="footer-social">
+                <a href="#">LinkedIn</a>
+                <a href="#">Twitter</a>
+                <a href="#">GitHub</a>
+              </div>
+            </div>
+
+            <div className="footer-col">
+              <h4>PRODUCTS</h4>
+              <a href="#">Labor Units</a>
+              <a href="#">Cognitive AI</a>
+              <a href="#">Companions</a>
+              <a href="#">Custom Systems</a>
+            </div>
+
+            <div className="footer-col">
+              <h4>COMPANY</h4>
+              <a href="#">About</a>
+              <a href="#">Research</a>
+              <a href="#">Careers</a>
+              <a href="#">News</a>
+            </div>
+
+            <div className="footer-col">
+              <h4>CONTACT</h4>
+              <a href="mailto:hello@thelife.ai">hello@thelife.ai</a>
+              <a href="tel:+15550000000">+1 (555) 000-0000</a>
+              <p>
+                Silicon Valley
+                <br />
+                California, USA
+              </p>
+            </div>
+          </div>
+
+          <div className="footer-bottom reveal-up">
+            <p>&copy; 2026 The Life. All rights reserved.</p>
+            <div className="footer-links">
+              <a href="#">Privacy</a>
+              <a href="#">Terms</a>
+              <a href="#">Legal</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </main>
   )
 }
 
 export default App
+
