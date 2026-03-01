@@ -11,6 +11,7 @@ body {
   background: #000;
   color: var(--text);
   font-family: 'Manrope', sans-serif;
+  padding-top: 84px;
 }
 
 .landing {
@@ -31,8 +32,10 @@ body {
 }
 
 .hero-nav-wrap {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1200;
   background: rgba(5, 5, 5, 0.92);
   backdrop-filter: blur(8px);
@@ -1379,16 +1382,22 @@ body {
 }
 
 @media (max-width: 860px) {
+  body {
+    padding-top: 74px;
+  }
+
   .hero-nav {
     width: min(92vw, 680px);
   }
 
-  .menu a {
+  .menu > a:not(.menu-contact) {
     display: none;
   }
 
   .menu-contact {
     height: 40px;
+    padding: 0 1rem;
+    font-size: 0.64rem;
   }
 
   .hero-content {

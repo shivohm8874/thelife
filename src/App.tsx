@@ -345,6 +345,44 @@ function App() {
         },
       })
 
+      gsap.from('.footer-social a, .footer-links a', {
+        y: 10,
+        opacity: 0,
+        duration: 0.45,
+        stagger: 0.04,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.site-footer',
+          start: 'top 92%',
+        },
+      })
+
+      gsap.utils.toArray<HTMLElement>('.performance-main img, .philosophy-image').forEach((el) => {
+        gsap.from(el, {
+          scale: 1.06,
+          opacity: 0.84,
+          duration: 0.9,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 84%',
+          },
+        })
+      })
+
+      gsap.utils.toArray<HTMLElement>('.opportunity, .core-tech, .join').forEach((section) => {
+        gsap.to(section, {
+          backgroundPositionY: '20%',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        })
+      })
+
     }, heroRef)
 
     return () => context.revert()

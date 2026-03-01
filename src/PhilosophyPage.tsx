@@ -161,6 +161,31 @@ export default function PhilosophyPage() {
           start: 'top 90%',
         },
       })
+
+      gsap.from('.footer-social a, .footer-links a', {
+        y: 8,
+        opacity: 0,
+        duration: 0.42,
+        stagger: 0.04,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.site-footer',
+          start: 'top 92%',
+        },
+      })
+
+      gsap.utils.toArray<HTMLElement>('.ph-manifesto, .ph-principles').forEach((section) => {
+        gsap.to(section, {
+          backgroundPositionY: '16%',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        })
+      })
     }, pageRef)
 
     return () => context.revert()

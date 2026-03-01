@@ -232,6 +232,30 @@ export default function RobotsPage() {
           start: 'top 90%',
         },
       })
+
+      gsap.from('.robot-card-body > *', {
+        y: 10,
+        opacity: 0,
+        duration: 0.45,
+        stagger: 0.03,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.robots-grid',
+          start: 'top 84%',
+        },
+      })
+
+      gsap.from('.footer-social a, .footer-links a', {
+        y: 8,
+        opacity: 0,
+        duration: 0.42,
+        stagger: 0.04,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.site-footer',
+          start: 'top 92%',
+        },
+      })
     }, pageRef)
 
     return () => context.revert()
