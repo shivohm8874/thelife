@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './App.css'
@@ -143,6 +143,7 @@ const tamSectors = [
 
 export default function RobotsPage() {
   const pageRef = useRef<HTMLDivElement>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     if (!pageRef.current) {
@@ -268,12 +269,31 @@ export default function RobotsPage() {
           <a className="logo" href="/">
             THE LIFE
           </a>
-          <nav className="menu" aria-label="Primary">
-            <a href="/#technology">TECHNOLOGY</a>
-            <a href="/robots.html">ROBOTS</a>
-            <a href="/philosophy.html">PHILOSOPHY</a>
-            <a href="/#research">RESEARCH</a>
-            <a className="menu-contact" href="/#contact">
+          <button
+            className={`menu-toggle ${menuOpen ? 'is-open' : ''}`}
+            type="button"
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+          <nav className={`menu ${menuOpen ? 'menu-open' : ''}`} aria-label="Primary">
+            <a href="/#technology" onClick={() => setMenuOpen(false)}>
+              TECHNOLOGY
+            </a>
+            <a href="/robots.html" onClick={() => setMenuOpen(false)}>
+              ROBOTS
+            </a>
+            <a href="/philosophy.html" onClick={() => setMenuOpen(false)}>
+              PHILOSOPHY
+            </a>
+            <a href="/#research" onClick={() => setMenuOpen(false)}>
+              RESEARCH
+            </a>
+            <a className="menu-contact" href="/#contact" onClick={() => setMenuOpen(false)}>
               CONTACT
             </a>
           </nav>
@@ -398,4 +418,5 @@ export default function RobotsPage() {
     </main>
   )
 }
+
 
