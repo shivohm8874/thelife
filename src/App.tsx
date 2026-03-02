@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { setupAdvancedMotion } from './advancedMotion'
 import './App.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -128,12 +129,23 @@ const joinStats = [
 
 function App() {
   const heroRef = useRef<HTMLDivElement>(null)
+  const orbRef = useRef<HTMLDivElement>(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     if (!heroRef.current) {
       return
     }
+
+    const pageRoot = heroRef.current.parentElement as HTMLElement | null
+    if (!pageRoot) {
+      return
+    }
+
+    const cleanupAdvanced = setupAdvancedMotion({
+      root: pageRoot,
+      orb: orbRef.current,
+    })
 
     const context = gsap.context(() => {
       const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
@@ -386,15 +398,20 @@ function App() {
 
     }, heroRef)
 
-    return () => context.revert()
+    return () => {
+      cleanupAdvanced()
+      context.revert()
+    }
   }, [])
 
   return (
     <main className="landing">
+      <div className="page-progress" aria-hidden="true" />
+      <div className="cursor-orb" ref={orbRef} aria-hidden="true" />
       <section className="hero" ref={heroRef}>
         <div className="hero-nav-wrap">
           <div className="hero-nav">
-            <a className="logo" href="/">
+            <a className="logo" href="./index.html">
               THE LIFE
             </a>
             <button
@@ -409,19 +426,19 @@ function App() {
               <span />
             </button>
             <nav className={`menu ${menuOpen ? 'menu-open' : ''}`} aria-label="Primary">
-              <a href="/#technology" onClick={() => setMenuOpen(false)}>
+              <a href="./index.html#technology" onClick={() => setMenuOpen(false)}>
                 TECHNOLOGY
               </a>
-              <a href="/robots.html" onClick={() => setMenuOpen(false)}>
+              <a href="./robots.html" onClick={() => setMenuOpen(false)}>
                 ROBOTS
               </a>
-              <a href="/philosophy.html" onClick={() => setMenuOpen(false)}>
+              <a href="./philosophy.html" onClick={() => setMenuOpen(false)}>
                 PHILOSOPHY
               </a>
-              <a href="/#research" onClick={() => setMenuOpen(false)}>
+              <a href="./index.html#research" onClick={() => setMenuOpen(false)}>
                 RESEARCH
               </a>
-              <a className="menu-contact" href="/#contact" onClick={() => setMenuOpen(false)}>
+              <a className="menu-contact" href="./contact.html" onClick={() => setMenuOpen(false)}>
                 CONTACT
               </a>
             </nav>

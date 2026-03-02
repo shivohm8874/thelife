@@ -1,6 +1,7 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { setupAdvancedMotion } from './advancedMotion'
 import './App.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -49,12 +50,18 @@ const principles = [
 
 export default function PhilosophyPage() {
   const pageRef = useRef<HTMLDivElement>(null)
+  const orbRef = useRef<HTMLDivElement>(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     if (!pageRef.current) {
       return
     }
+
+    const cleanupAdvanced = setupAdvancedMotion({
+      root: pageRef.current,
+      orb: orbRef.current,
+    })
 
     const context = gsap.context(() => {
       gsap.from('.hero-nav .logo', {
@@ -189,14 +196,19 @@ export default function PhilosophyPage() {
       })
     }, pageRef)
 
-    return () => context.revert()
+    return () => {
+      cleanupAdvanced()
+      context.revert()
+    }
   }, [])
 
   return (
     <main className="landing" ref={pageRef}>
+      <div className="page-progress" aria-hidden="true" />
+      <div className="cursor-orb" ref={orbRef} aria-hidden="true" />
       <div className="hero-nav-wrap">
         <div className="hero-nav">
-          <a className="logo" href="/">
+          <a className="logo" href="./index.html">
             THE LIFE
           </a>
           <button
@@ -211,19 +223,19 @@ export default function PhilosophyPage() {
             <span />
           </button>
           <nav className={`menu ${menuOpen ? 'menu-open' : ''}`} aria-label="Primary">
-            <a href="/#technology" onClick={() => setMenuOpen(false)}>
+            <a href="./index.html#technology" onClick={() => setMenuOpen(false)}>
               TECHNOLOGY
             </a>
-            <a href="/robots.html" onClick={() => setMenuOpen(false)}>
+            <a href="./robots.html" onClick={() => setMenuOpen(false)}>
               ROBOTS
             </a>
-            <a href="/philosophy.html" onClick={() => setMenuOpen(false)}>
+            <a href="./philosophy.html" onClick={() => setMenuOpen(false)}>
               PHILOSOPHY
             </a>
-            <a href="/#research" onClick={() => setMenuOpen(false)}>
+            <a href="./index.html#research" onClick={() => setMenuOpen(false)}>
               RESEARCH
             </a>
-            <a className="menu-contact" href="/#contact" onClick={() => setMenuOpen(false)}>
+            <a className="menu-contact" href="./contact.html" onClick={() => setMenuOpen(false)}>
               CONTACT
             </a>
           </nav>
@@ -380,4 +392,6 @@ export default function PhilosophyPage() {
     </main>
   )
 }
+
+
 
